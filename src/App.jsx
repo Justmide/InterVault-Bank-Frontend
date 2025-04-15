@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { CircleLoader } from "react-spinners"; // Import spinner
-import Navbar from './Components/Navbar';
+import { CircleLoader } from "react-spinners";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from "./Pages/LandingPage";
-
+import Signup from './Pages/Authentication/Signup';
+// import Footer from './Components/Footer';
+// import Navbar from './Components/Navbar';
+import AuthProvider from './UseContext/AuthContext';
+import { Toaster } from "sonner";
+import VerifyAccount from './Pages/Authentication/VerifyAccount';
+import AccountVerification from './Pages/Authentication/AccountVerification';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -10,7 +16,7 @@ const App = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 10); // Show spinner for 5 seconds
+    }, 300);
 
     return () => clearTimeout(timer);
   }, []);
@@ -18,18 +24,27 @@ const App = () => {
   return (
     <div>
       {loading ? (
-        // Full-screen loading spinner
         <div className="flex items-center justify-center h-screen w-full bg-gray-900">
           <CircleLoader color="#f40606" size={70} />
         </div>
       ) : (
-        // Only show the content after loading
-        <>
-        {/* <BrowserRoute> */}
-          <Navbar />
-          <LandingPage />
-          {/* </BrowserRoute> */}
-        </>
+        <Router>
+          <AuthProvider>
+            <Toaster
+              richColors
+              visibleToasts={2}
+              position="top-right"
+              closeButton
+            />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/VerifyAccount" element={<VerifyAccount />} />
+              <Route path='verify/:token' element={<AccountVerification />} />
+              <Route path='*' element={<h1>Working on It</h1>} />
+            </Routes>
+          </AuthProvider>
+        </Router>
       )}
     </div>
   );

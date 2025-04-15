@@ -19,10 +19,24 @@ import insurance from "../assets/Images/insurance.jpg"
 import UserCounter from '../Components/UserCounter';
 import ImageCarousel from '../Components/ImageCarousel';
 import FaqAccordion from '../Components/FaqAccord';
-
-
+import Testimonial1 from '../Components/Testimonial';
+import { useNavigate } from 'react-router-dom';
+import { CircleLoader } from "react-spinners";
+import { useState } from 'react';
+import Footer from '../Components/Footer';
 
 const LandingPage = () => {
+  const [loading, setLoading] = useState(false); // State for loading
+  const navigate = useNavigate()
+
+  const handleClick =()=>{
+    setLoading(true); 
+
+    setTimeout(() => {
+      navigate('/signup'); // Navigate after the loading effect
+    }, 2000); 
+  }
+
     const sectionRefs = {
         "Privacy": useRef(null),
         "Checkings": useRef(null),
@@ -33,7 +47,12 @@ const LandingPage = () => {
   return (
     <>
       <Navbar sectionRefs={sectionRefs} />
-
+      <div>
+      <Navbar />
+      </div>
+      <div className='z-50'>
+      <Navbar />
+      </div>
       <section className="sect1 relative">
         <div className="relative">
           {/* Background Image */}
@@ -64,7 +83,16 @@ const LandingPage = () => {
                     <FontAwesomeIcon icon={faLock} /> Online Banking
                   </p>
                   <div className="pt-[10px] px-3 flex justify-center">
+                    <div onClick={handleClick}>
+                     {loading ? (
+                        <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-5000">
+                           <CircleLoader color="#f40606" size={70} />
+                          </div>  
+                      ) :(
                     <LoginBtn text="Secure Login" />
+                      )}
+                    </div>
+                    
                   </div>
                   <div className="text-center font-semibold italic gap-11 pt-3 px-3 text-black underline text-[15px]">
                     <a href="#">Set up in 1 Minute</a>
@@ -96,7 +124,15 @@ const LandingPage = () => {
                   </p>
                 </div>
                 <div className="flex pt-3 lg:pl-[50px] md:justify-center md:pb-[50px] sm:justify-center lg:justify-center justify-center ">
-                  <LoginBtn text="Apply Today" />
+                  <div onClick={handleClick}>
+                    {loading ? (
+                      <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
+                        <CircleLoader color="#f40606" size={70} />
+                      </div>
+                    ) : (
+                      <LoginBtn text="Apply Today" />
+                    )}``
+                  </div>
                 </div>
               </motion.div>
             </section>
@@ -164,7 +200,7 @@ const LandingPage = () => {
             </p>
           </div>
 
-          {/* button effect */}
+          {/* effect */}
           <div className="flex justify-center w-full pt-10">
             <SecondaryBtn text="Learn More" />
           </div>
@@ -172,173 +208,221 @@ const LandingPage = () => {
       </section>
 
       {/* checking */}
-<section ref={sectionRefs["Checkings"]} id='Checkings'> 
-<div className='w-full h-[550px] border-2 border-red-400'>
-<ImageCarousel />
-</div>
-</section>
+      <section ref={sectionRefs["Checkings"]} id="Checkings">
+        <div className="w-full h-[550px] border-2 border-red-400">
+          <ImageCarousel />
+        </div>
+      </section>
 
       {/* third section */}
       <section ref={sectionRefs["About Us"]} id="About Us">
-  <div className="w-full border-2 border-red-600">
-    <div className="w-full text-center text-[40px] text-gray-800 font-bold pt-5">
-      <p>InterVault Bank</p>
-    </div>
-    <div className="w-full bg-white py-10 px-4 space-y-20">
-      {/* PERSONAL BANKING */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-        <div className="flex justify-center">
-          <img
-            src={building}
-            alt="office"
-            className="w-full max-w-[500px] h-auto rounded-3xl shadow-md"
-            loading="lazy"
-          />
+        <div className="w-full border-2 border-red-600">
+          <div className="w-full text-center text-[40px] text-gray-800 font-bold pt-5">
+            <p>InterVault Bank</p>
+          </div>
+          <div className="w-full bg-white py-10 px-4 space-y-20">
+            {/* PERSONAL BANKING */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+              <div className="flex justify-center">
+                <img
+                  src={building}
+                  alt="office"
+                  className="w-full max-w-[500px] h-auto rounded-3xl shadow-md"
+                  loading="lazy"
+                />
+              </div>
+              <div className="pt-4 ">
+                <div className="text-sm pb-2 font-semibold border-b-4 border-red-700 w-fit lg:mx-0 text-gray-700">
+                  <p>👤 PERSONAL BANKING</p>
+                </div>
+                <div className="pt-4 text-[20px] lg:text-[40px] font-bold leading-snug lg:text-left text-gray-900">
+                  <p>InterVault Bank: Banking Made Simple & Secure</p>
+                </div>
+                <div className="text-[15px] text-gray-800 font-medium italic pt-4">
+                  <p>
+                    At InterVault Bank, we believe in effortless banking that
+                    fits your lifestyle. Whether you're withdrawing funds,
+                    making deposits, or ensuring your financial security, we’ve
+                    designed our services to offer convenience, safety, and
+                    peace of mind.
+                  </p>
+                  <ul className="list-none pt-4 space-y-2">
+                    <li>
+                      ✅ <strong>Mobile Deposits</strong> – Deposit checks from
+                      anywhere, anytime.
+                    </li>
+                    <li>
+                      ✅ <strong>Custom Alerts</strong> – Stay informed with
+                      real-time updates on your account.
+                    </li>
+                    <li>
+                      ✅ <strong>Secure Touch Login</strong> – Quick, safe
+                      access without worrying about passwords.
+                    </li>
+                    <li>
+                      ✅ <strong>Paperless Statements</strong> – Access
+                      easy-to-read electronic statements anytime.
+                    </li>
+                  </ul>
+                  <p className="pt-4">
+                    At InterVault Bank, your financial well-being is our
+                    priority. Experience banking built for you.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* BUSINESS BANKING */}
+            <div className="flex flex-col lg:flex-row items-center gap-10 px-4 lg:px-16">
+              <div className="w-full lg:w-1/2">
+                <div className="text-[16px] pb-2 font-semibold border-b-4 border-red-700 w-fit text-gray-800 mb-4">
+                  💼 BUSINESS BANKING
+                </div>
+                <h2 className="text-[20px] lg:text-[40px] font-bold leading-snug text-gray-900">
+                  InterVault Bank: Powering Business Growth with Secure
+                  Financial Solutions
+                </h2>
+                <div className="text-[15px] text-gray-700 font-medium italic pt-4 leading-relaxed">
+                  <p>
+                    Whether you're a startup or a seasoned enterprise,
+                    InterVault Bank offers tailored financial tools to help your
+                    business thrive. Our business banking solutions combine
+                    efficiency, innovation, and world-class security.
+                  </p>
+                  <br />
+                  <strong className="text-gray-800">
+                    Designed for Ambition, Built for Success
+                  </strong>
+                  <br />
+                  <br />✅ <strong>Business Checking</strong> – Simplified
+                  accounts with powerful management tools.
+                  <br />✅ <strong>ACH & Wire Transfers</strong> – Fast, secure
+                  money movement for your business.
+                  <br />✅ <strong>Payroll Support</strong> – Hassle-free
+                  payroll integration with top software.
+                  <br />✅ <strong>Multi-user Access</strong> – Collaborate
+                  securely with your financial team.
+                  <br />
+                  <br />
+                  Let InterVault Bank be your partner in progress — where
+                  business banking meets next-level innovation.
+                </div>
+              </div>
+              <div className="w-full lg:w-1/2 flex justify-center">
+                <img
+                  src={business}
+                  alt="Two colleagues discussing business"
+                  className="w-full max-w-[550px] h-auto rounded-3xl shadow-lg"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* INSURANCE */}
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-10 px-4 lg:px-16">
+              <div className="w-full lg:w-1/2">
+                <div className="text-[16px] pb-2 font-semibold border-b-4 border-red-700 w-fit text-gray-800 mb-4">
+                  🛡️ INSURANCE SERVICES
+                </div>
+                <h2 className="text-[20px] lg:text-[40px] font-bold leading-snug text-gray-900">
+                  Protect What Matters Most with InterVault Insurance
+                </h2>
+                <div className="text-[15px] text-gray-700 font-medium italic pt-4 leading-relaxed">
+                  <p>
+                    Life is unpredictable, but your future doesn’t have to be.
+                    InterVault Insurance offers a range of protection plans for
+                    individuals and businesses alike. Whether you're
+                    safeguarding your home, vehicle, health, or business assets,
+                    we've got you covered.
+                  </p>
+                  <br />✅ <strong>Auto & Home Insurance</strong> – Coverage
+                  that brings peace of mind.
+                  <br />✅ <strong>Life & Health Insurance</strong> – Plans that
+                  protect your loved ones.
+                  <br />✅ <strong>Business Risk Protection</strong> – Secure
+                  your company from unforeseen challenges.
+                  <br />
+                  <br />
+                  Choose InterVault for comprehensive, affordable, and
+                  personalized insurance solutions.
+                </div>
+              </div>
+              <div className="w-full lg:w-1/2 flex justify-center">
+                <img
+                  src={insurance}
+                  alt="Family protected by insurance"
+                  className="w-full max-w-[550px] h-auto rounded-3xl shadow-lg"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* LOANS */}
+            <div className="flex flex-col lg:flex-row items-center gap-10 px-4 lg:px-16">
+              <div className="w-full lg:w-1/2">
+                <div className="text-[16px] pb-2 font-semibold border-b-4 border-red-700 w-fit text-gray-800 mb-4">
+                  💰 LOAN SERVICES
+                </div>
+                <h2 className="text-[20px] lg:text-[40px] font-bold leading-snug text-gray-900">
+                  Empower Your Dreams with Flexible InterVault Loans
+                </h2>
+                <div className="text-[15px] text-gray-700 font-medium italic pt-4 leading-relaxed">
+                  <p>
+                    Whether you’re planning your next big move, buying a home,
+                    or expanding your business, InterVault's tailored loan
+                    options can help you get there. We offer competitive rates
+                    and a transparent process from start to finish.
+                  </p>
+                  <br />✅ <strong>Personal Loans</strong> – Fast approval for
+                  everyday financial needs.
+                  <br />✅ <strong>Auto & Mortgage Loans</strong> – Drive or
+                  move into your future today.
+                  <br />✅ <strong>Business Loans</strong> – Fuel your growth
+                  with capital that moves with you.
+                  <br />
+                  <br />
+                  Start building your future today with InterVault’s easy,
+                  secure loan services.
+                </div>
+              </div>
+              <div className="w-full lg:w-1/2 flex justify-center">
+                <img
+                  src={supportloan}
+                  alt="Customer receiving loan services"
+                  className="w-full max-w-[550px] h-auto rounded-3xl shadow-lg"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="pt-4 ">
-          <div className="text-sm pb-2 font-semibold border-b-4 border-red-700 w-fit lg:mx-0 text-gray-700">
-            <p>👤 PERSONAL BANKING</p>
-          </div>
-          <div className="pt-4 text-[20px] lg:text-[40px] font-bold leading-snug lg:text-left text-gray-900">
-            <p>InterVault Bank: Banking Made Simple & Secure</p>
-          </div>
-          <div className="text-[15px] text-gray-800 font-medium italic pt-4">
-            <p>
-              At InterVault Bank, we believe in effortless banking that fits your lifestyle.
-              Whether you're withdrawing funds, making deposits, or ensuring your financial security,
-              we’ve designed our services to offer convenience, safety, and peace of mind.
-            </p>
-            <ul className="list-none pt-4 space-y-2">
-              <li>✅ <strong>Mobile Deposits</strong> – Deposit checks from anywhere, anytime.</li>
-              <li>✅ <strong>Custom Alerts</strong> – Stay informed with real-time updates on your account.</li>
-              <li>✅ <strong>Secure Touch Login</strong> – Quick, safe access without worrying about passwords.</li>
-              <li>✅ <strong>Paperless Statements</strong> – Access easy-to-read electronic statements anytime.</li>
-            </ul>
-            <p className="pt-4">
-              At InterVault Bank, your financial well-being is our priority. Experience banking built for you.
-            </p>
-          </div>
+      </section>
+
+      {/* fourth section  */}
+      <section className="w-full pt-[50px]">
+        <div className="">
+          <UserCounter />
         </div>
+      </section>
+
+      {/* faq section */}
+      <section ref={sectionRefs["Faq"]} id="Faq">
+        <div className="px-1 md:px-0 py-12 bg-white">
+          <FaqAccordion />
+        </div>
+      </section>
+
+      {/* testimonial section  */}
+      <section>
+        <div>
+          <Testimonial1 />
+        </div>
+      </section>
+
+      {/* footer  */}
+      <div>
+           <Footer />
       </div>
-
-      {/* BUSINESS BANKING */}
-      <div className="flex flex-col lg:flex-row-reverse items-center gap-10 px-4 lg:px-16">
-        <div className="w-full lg:w-1/2">
-          <div className="text-[16px] pb-2 font-semibold border-b-4 border-red-700 w-fit text-gray-800 mb-4">
-            💼 BUSINESS BANKING
-          </div>
-          <h2 className="text-[20px] lg:text-[40px] font-bold leading-snug text-gray-900">
-            InterVault Bank: Powering Business Growth with Secure Financial Solutions
-          </h2>
-          <div className="text-[15px] text-gray-700 font-medium italic pt-4 leading-relaxed">
-            <p>
-              Whether you're a startup or a seasoned enterprise, InterVault Bank offers tailored financial tools to help
-              your business thrive. Our business banking solutions combine efficiency, innovation, and world-class security.
-            </p>
-            <br />
-            <strong className="text-gray-800">Designed for Ambition, Built for Success</strong>
-            <br /><br />
-            ✅ <strong>Business Checking</strong> – Simplified accounts with powerful management tools.<br />
-            ✅ <strong>ACH & Wire Transfers</strong> – Fast, secure money movement for your business.<br />
-            ✅ <strong>Payroll Support</strong> – Hassle-free payroll integration with top software.<br />
-            ✅ <strong>Multi-user Access</strong> – Collaborate securely with your financial team.<br /><br />
-            Let InterVault Bank be your partner in progress — where business banking meets next-level innovation.
-          </div>
-        </div>
-        <div className="w-full lg:w-1/2 flex justify-center">
-          <img
-            src={business}
-            alt="Two colleagues discussing business"
-            className="w-full max-w-[550px] h-auto rounded-3xl shadow-lg"
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-      {/* INSURANCE */}
-      <div className="flex flex-col lg:flex-row-reverse items-center gap-10 px-4 lg:px-16">
-        <div className="w-full lg:w-1/2">
-          <div className="text-[16px] pb-2 font-semibold border-b-4 border-red-700 w-fit text-gray-800 mb-4">
-            🛡️ INSURANCE SERVICES
-          </div>
-          <h2 className="text-[20px] lg:text-[40px] font-bold leading-snug text-gray-900">
-            Protect What Matters Most with InterVault Insurance
-          </h2>
-          <div className="text-[15px] text-gray-700 font-medium italic pt-4 leading-relaxed">
-            <p>
-              Life is unpredictable, but your future doesn’t have to be. InterVault Insurance offers a range of protection plans
-              for individuals and businesses alike. Whether you're safeguarding your home, vehicle, health, or business assets,
-              we've got you covered.
-            </p>
-            <br />
-            ✅ <strong>Auto & Home Insurance</strong> – Coverage that brings peace of mind.<br />
-            ✅ <strong>Life & Health Insurance</strong> – Plans that protect your loved ones.<br />
-            ✅ <strong>Business Risk Protection</strong> – Secure your company from unforeseen challenges.<br /><br />
-            Choose InterVault for comprehensive, affordable, and personalized insurance solutions.
-          </div>
-        </div>
-        <div className="w-full lg:w-1/2 flex justify-center">
-          <img
-            src={insurance}
-            alt="Family protected by insurance"
-            className="w-full max-w-[550px] h-auto rounded-3xl shadow-lg"
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-      {/* LOANS */}
-      <div className="flex flex-col lg:flex-row items-center gap-10 px-4 lg:px-16">
-        <div className="w-full lg:w-1/2">
-          <div className="text-[16px] pb-2 font-semibold border-b-4 border-red-700 w-fit text-gray-800 mb-4">
-            💰 LOAN SERVICES
-          </div>
-          <h2 className="text-[20px] lg:text-[40px] font-bold leading-snug text-gray-900">
-            Empower Your Dreams with Flexible InterVault Loans
-          </h2>
-          <div className="text-[15px] text-gray-700 font-medium italic pt-4 leading-relaxed">
-            <p>
-              Whether you’re planning your next big move, buying a home, or expanding your business, InterVault's tailored
-              loan options can help you get there. We offer competitive rates and a transparent process from start to finish.
-            </p>
-            <br />
-            ✅ <strong>Personal Loans</strong> – Fast approval for everyday financial needs.<br />
-            ✅ <strong>Auto & Mortgage Loans</strong> – Drive or move into your future today.<br />
-            ✅ <strong>Business Loans</strong> – Fuel your growth with capital that moves with you.<br /><br />
-            Start building your future today with InterVault’s easy, secure loan services.
-          </div>
-        </div>
-        <div className="w-full lg:w-1/2 flex justify-center">
-          <img
-            src={supportloan}
-            alt="Customer receiving loan services"
-            className="w-full max-w-[550px] h-auto rounded-3xl shadow-lg"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-{/* fourth section  */}
-<section className='w-full pt-[50px]'>
-<div className=''>
-<UserCounter />
-</div>
-</section>
-
-{/* faq section */}
- <section ref={sectionRefs["Faq"]} id="Faq">
- <div className="px-4 md:px-12 py-12 bg-white">
-  <FaqAccordion />
-</div>
- </section>
-
-// testimonial sectio 
-<section>
-  
-  </section>
     </>
   );
 };

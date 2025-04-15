@@ -1,11 +1,15 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import React from "react";
-import { Menu, X } from "lucide-react"; // Import icons for mobile menu
+import { Menu, X } from "lucide-react";
 import PrimaryBtn from "./PrimaryBtn";
 import Logo from '../assets/Images/intervault.jpg';
+import { useNavigate } from "react-router-dom";
+import { CircleLoader } from "react-spinners";
+import { div } from "framer-motion/client";
 
 export default function Navbar({ sectionRefs }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loading, setLoading ] = useState(false)
 
   const navItems = [
     { label: "Privacy", id: "Privacy" },
@@ -14,41 +18,61 @@ export default function Navbar({ sectionRefs }) {
     { label: "Faq", id: "Faq" },
     { label: "Find a Branch", id: "Find a Branch" },
   ];
+  const navigate = useNavigate()
 
-  // Function to scroll to the section smoothly
+  const handleClick = () =>{
+    setLoading(true)
+    setTimeout(() => {
+      navigate('/signup'); // Navigate after the loading effect
+    }, 2000);
+  }
   const handleScroll = (e, sectionId) => {
-    e.preventDefault(); // Prevent default anchor behavior
+    e.preventDefault();
     const section = sectionRefs[sectionId]?.current;
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
+      setMobileMenuOpen(false);
     }
   };
 
   return (
     <header className="w-full fixed z-50">
-      {/* Top Utility Bar */}
+      {/* Top Bar */}
       <nav className="bg-gray-100 text-gray-700 text-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-red-600 transition-colors duration-300">Personal</a>
-            <a href="#" className="hover:text-red-600 transition-colors duration-300">Business</a>
+            <a href="#" className="hover:text-red-600">
+              Personal
+            </a>
+            <a href="#" className="hover:text-red-600">
+              Business
+            </a>
           </div>
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-red-600 transition-colors duration-300">Search</a>
-            <a href="#" className="hover:text-red-600 transition-colors duration-300">English</a>
+            <a href="#" className="hover:text-red-600">
+              Search
+            </a>
+            <a href="#" className="hover:text-red-600">
+              English
+            </a>
           </div>
         </div>
       </nav>
 
-      {/* Main Navigation Bar */}
+      {/* Main Nav */}
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
           {/* Logo */}
           <a href="#" className="text-2xl font-bold text-purple-700">
-            <img src={Logo} alt="logo" loading="lazy" className="w-[120px] sm:w-[175px] md:w-[125px] lg:w-[200px]" />
+            <img
+              src={Logo}
+              alt="logo"
+              loading="lazy"
+              className="w-[120px] sm:w-[175px] md:w-[125px] lg:w-[200px]"
+            />
           </a>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Links */}
           <ul className="hidden md:flex space-x-1">
             {navItems.map((item, index) => (
               <li key={index} className="relative">
@@ -67,23 +91,27 @@ export default function Navbar({ sectionRefs }) {
             ))}
           </ul>
 
-          <div className="hidden md:flex space-x-1">
-            <PrimaryBtn />
+          {/* Desktop CTA */}
+          <div className="hidden md:flex space-x-1" onClick={handleClick}>
+            {loading ? (
+              <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-5000">
+                <CircleLoader color="#f40606" size={70} />
+              </div>
+            ) : (
+              <PrimaryBtn />
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle (Icon Only) */}
           <button
-            className="md:hidden text-gray-700 flex gap-[6px] items-center"
+            className="md:hidden text-gray-700"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <div>
-              <PrimaryBtn />
-            </div>
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Links */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white shadow-md">
             <ul className="flex flex-col items-center space-y-4 py-4">
@@ -102,6 +130,17 @@ export default function Navbar({ sectionRefs }) {
                   </a>
                 </li>
               ))}
+              <li>
+                <div onClick={handleClick}>
+                  {loading ? (
+                    <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-5000">
+                      <CircleLoader color="#f40606" size={70} />
+                    </div>
+                  ) : (
+                    <PrimaryBtn />
+                  )}
+                </div>
+              </li>
             </ul>
           </div>
         )}

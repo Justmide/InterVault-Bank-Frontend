@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SecondaryBtn = ({text}) => {
+const SecondaryBtn = ({ text }) => {
   return (
     <StyledWrapper>
-      <button>
-        <a href="#" className="btn2"><span className="spn2">{text}</span></a>
+      <button className="btn2" >
+        <span className="spn2">{text}</span>
       </button>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .btn2 {
@@ -23,6 +23,8 @@ const StyledWrapper = styled.div`
     font-weight: 600;
     font-size: 20px;
     transition: 0.3s;
+    background: transparent;
+    cursor: pointer;
   }
 
   .btn2::before {
@@ -73,6 +75,8 @@ const StyledWrapper = styled.div`
     text-decoration: none;
     border: none;
     background-color: transparent;
-  }`;
+  }
+`;
+
 
 export default SecondaryBtn;
