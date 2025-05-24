@@ -11,7 +11,7 @@ const AccountVerification = () => {
     const handleVerifyAcc = async () => {
       setVerifying(true);
       try {
-        const res = await fetch(`http://localhost:3001/api/v1/auth/verify/${token}`, {
+        const res = await fetch(`https://intervault-bank-backend.onrender.com/api/v1/auth/verify/${token}`, {
           method: "POST",
         });
         const data = await res.json();

@@ -14,7 +14,7 @@ const VerifyAccount = () => {
         {/* Headline */}
         <h2 className="text-red-500 text-2xl font-bold mb-2 sm:text-3xl lg:text-4xl">Verify Your Email</h2>
         <p className="text-black mb-6 text-sm sm:text-base">
-          We've sent a verification link to your email. Please check your inbox and follow the instructions to activate your account.
+          We've sent a verification link to your email. Please check your inbox or spam and follow the instructions to activate your account.
         </p>
 
         {/* Action buttons */}
