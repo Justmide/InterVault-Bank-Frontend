@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 import PrimaryBtn from "../Button/PrimaryBtn";
-import Logo from "../../assets/Images/Intervault.jpg";
+import Logo from "../../assets/Images/intervault.jpg";
 
 export default function Navbar({ sectionRefs }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
