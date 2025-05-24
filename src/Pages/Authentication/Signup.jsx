@@ -118,7 +118,7 @@ const Signup = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
             >
-              <p className="text-2xl font-semibold italic mb-1 flex gap-1">
+              <p className="text-2xl font-semibold italic mb-1 flex gap-1 mt-5">
                 Create an Account
                 <span className="text-red-600">.</span>
                 <span className="text-red-600 blink-dot">.</span>
