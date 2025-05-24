@@ -1,5 +1,4 @@
 import React from "react";
-import Logo from '../../assets/Images/intervault.jpg';
 
 const Footer = () => {
   return (
