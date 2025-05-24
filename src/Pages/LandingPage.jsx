@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import coverImage from "../assets/Images/peakpx.jpg";
-import LoginBtn from '../Components/LoginBtn';
-import SearchBox from '../Components/SearchBox';
+import LoginBtn from '../Components/Button/LoginBtn';
+import SearchBox from '../Components/LandingPage/SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import saving from "../assets/Images/saving.png";
@@ -10,24 +11,58 @@ import loan from "../assets/Images/loan.png";
 import support from "../assets/Images/support.png";
 import checking from "../assets/Images/checking.png";
 import padlock from "../assets/Images/padlock.png";
-import SecondaryBtn from '../Components/SecondaryBtn';
-import Navbar from "../Components/Navbar";
+import SecondaryBtn from '../Components/Button/SecondaryBtn';
+import Navbar from "../Components/NavBar/Navbar";
 import building from "../assets/Images/building.jpg"
 import business from "../assets/Images/discussion.jpg"
 import supportloan from "../assets/Images/loan service.jpg"
 import insurance from "../assets/Images/insurance.jpg"
-import UserCounter from '../Components/UserCounter';
-import ImageCarousel from '../Components/ImageCarousel';
-import FaqAccordion from '../Components/FaqAccord';
-import Testimonial1 from '../Components/Testimonial';
+import UserCounter from '../Components/LandingPage/UserCounter';
+import ImageCarousel from '../Components/LandingPage/ImageCarousel';
+import FaqAccordion from '../Components/LandingPage/FaqAccord';
+import Testimonial1 from '../Components/LandingPage/Testimonial';
 import { useNavigate } from 'react-router-dom';
 import { CircleLoader } from "react-spinners";
 import { useState } from 'react';
-import Footer from '../Components/Footer';
+import Footer from '../Components/LandingPage/Footer';
+import "../index.css"
+
+const useScrollFadeIn = () => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.02 });
+  const variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 }
+  };
+  return { ref, variants, inView };
+};
+
+const SectionWrapper = ({ children }) => {
+  const { ref, variants, inView } = useScrollFadeIn();
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={variants}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 
 const LandingPage = () => {
   const [loading, setLoading] = useState(false); // State for loading
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+
+  const privacyRef = useRef(null);
+  const checkingsRef = useRef(null);
+  const aboutUsRef = useRef(null);
+  const faqRef = useRef(null);
+  const testimonialRef = useRef(null);
 
   const handleClick =()=>{
     setLoading(true); 
@@ -37,22 +72,31 @@ const LandingPage = () => {
     }, 2000); 
   }
 
-    const sectionRefs = {
-        "Privacy": useRef(null),
-        "Checkings": useRef(null),
-        "About Us": useRef(null),
-        "Faq": useRef(null),
-        "Find a Branch": useRef(null),
-      };
+  const scrollToSection = (ref) => {
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start',   
+        inline: 'nearest'   });
+    }
+  };
+
+  const sectionRefs = {
+    "Privacy": privacyRef,
+    "Checkings": checkingsRef,
+    "About Us": aboutUsRef,
+    "Faq": faqRef,
+    "Find a Branch": testimonialRef
+  };
   return (
     <>
-      <Navbar sectionRefs={sectionRefs} />
-      <div>
+      <Navbar onLinkClick={scrollToSection} sectionRefs={sectionRefs} />
+      {/* <div>
       <Navbar />
       </div>
       <div className='z-50'>
       <Navbar />
-      </div>
+      </div> */}
       <section className="sect1 relative">
         <div className="relative">
           {/* Background Image */}
@@ -83,7 +127,7 @@ const LandingPage = () => {
                     <FontAwesomeIcon icon={faLock} /> Online Banking
                   </p>
                   <div className="pt-[10px] px-3 flex justify-center">
-                    <div onClick={handleClick}>
+                    <div onClick={handleClick} role='button'>
                      {loading ? (
                         <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-5000">
                            <CircleLoader color="#f40606" size={70} />
@@ -110,14 +154,14 @@ const LandingPage = () => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <div className="headingTags lg:pr-[50px] md:pr-[5px] lg:pl-[50px] md:pl-[5px]">
-                  <p className="text-[13px] md:text-[16px] sm:text-[13px] lg:text-[20px] font-semibold pr-[5px] text-center">
+                <div className="mx-auto headingTags lg:pr-[50px] md:pr-[5px] lg:pl-[50px] md:pl-[5px]">
+                  <p className="mt-9 text-[16px] md:text-[16px] sm:text-[13px] lg:text-[20px] font-semibold pr-[5px] text-center">
                     24/7 Mobile & Online Banking for Secure, Convenient Access
                     to Your Accounts
                   </p>
                 </div>
                 <div className="subhead lg:pr-[50px] md:pr-[5px] lg:pl-[50px] md:pl-[5px] mt-5">
-                  <p className="lg:text-[15px] md:text-[13px] sm:text-[10px] text-[10px] font-sans italic pl-[2px] text-center">
+                  <p className="lg:text-[18px] md:text-[17px] sm:text-[15px] text-[15px] font-sans italic pl-[2px] text-center">
                     Enjoy seamless transactions, effortless bill payments, and
                     round-the-clock account access with an intuitive mobile and
                     online banking experience.
@@ -131,7 +175,7 @@ const LandingPage = () => {
                       </div>
                     ) : (
                       <LoginBtn text="Apply Today" />
-                    )}``
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -139,10 +183,10 @@ const LandingPage = () => {
 
             {/* Features Section */}
             <motion.section
-              className="flex mt-[50px] w-full h-[180px] backdrop-blur-[55px] relative"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+            className="flex mt-[50px] w-full h-[180px] backdrop-blur-[55px] relative"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
             >
               {/* White Transparent Overlay */}
               <div className="absolute inset-0 bg-white/65 rounded-sm"></div>
@@ -159,7 +203,7 @@ const LandingPage = () => {
                   {[
                     { img: saving, text: "Savings Accounts" },
                     { img: loan, text: "Loans & Credit Services" },
-                    { img: checking, text: "Checking Accounts" },
+                    { img: checking, text: "Checking Accounts"},
                     { img: support, text: "24/7 Customer Support" },
                   ].map((item, index) => (
                     <motion.div
@@ -168,7 +212,7 @@ const LandingPage = () => {
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="flex justify-center">
+                      <div className="flex justify-center items-center">
                         <img src={item.img} alt="" className="w-[50px]" />
                       </div>
                       <p className="text-center text-[17px] text-black font-semibold">
@@ -183,40 +227,53 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section ref={sectionRefs["Privacy"]} id="Privacy">
-        <div className="w-full h-[450px] border-2 border-red-600 bg-[#f0f0f0]">
-          {/* padlock image */}
+      {/* Privacy Section */}
+      <section ref={privacyRef} id="Privacy">
+      <SectionWrapper>
+        <motion.div
+          className="w-full h-[450px] bg-[#f0f0f0]"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="w-[100%] flex justify-center pt-[70px]">
             <img src={padlock} alt="secure lock" className="w-[70px]" />
           </div>
           <div className="text-gray-700 text-center text-[20px] lg:text-[30px] md:text-[25px] font-sans font-bold pt-2">
             <p>Safeguard Your Finances from Fraud</p>
           </div>
-
           <div className="pt-5 text-center text-gray-800 text-[16px] lg:tet-[20px] md:text-[18px] italic font-light">
             <p>
-              Fraudsters utilize sophisticated tactics to access and exploit
-              your personal and financial information.
+              Fraudsters utilize sophisticated tactics to access and exploit your personal and financial information.
             </p>
           </div>
-
-          {/* effect */}
           <div className="flex justify-center w-full pt-10">
             <SecondaryBtn text="Learn More" />
           </div>
-        </div>
+        </motion.div>
+        </SectionWrapper>
       </section>
 
-      {/* checking */}
-      <section ref={sectionRefs["Checkings"]} id="Checkings">
-        <div className="w-full h-[550px] border-2 border-red-400">
+      {/* Checkings Section */}
+      <section ref={checkingsRef} id="Checkings">
+        <motion.div
+          className="w-full h-[550px]"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <ImageCarousel />
-        </div>
+        </motion.div>
       </section>
 
-      {/* third section */}
-      <section ref={sectionRefs["About Us"]} id="About Us">
-        <div className="w-full border-2 border-red-600">
+      {/* About Us Section */}
+      <section ref={aboutUsRef} id="About Us">
+        <motion.div
+          className="w-full"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="w-full text-center text-[40px] text-gray-800 font-bold pt-5">
             <p>InterVault Bank</p>
           </div>
@@ -395,7 +452,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* fourth section  */}
@@ -405,18 +462,28 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* faq section */}
-      <section ref={sectionRefs["Faq"]} id="Faq">
-        <div className="px-1 md:px-0 py-12 bg-white">
+      {/* FAQ Section */}
+      <section ref={faqRef} id="Faq">
+        <motion.div
+          className="px-1 md:px-0 py-12 bg-white"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <FaqAccordion />
-        </div>
+        </motion.div>
       </section>
 
-      {/* testimonial section  */}
-      <section>
-        <div>
+      {/* Testimonial Section */}
+      <section ref={testimonialRef}>
+        <motion.div
+          className="w-full"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <Testimonial1 />
-        </div>
+        </motion.div>
       </section>
 
       {/* footer  */}

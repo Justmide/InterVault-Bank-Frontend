@@ -1,5 +1,5 @@
 import React from 'react';
-import VerifyAnimation from '../../Components/VerifyAnimation'; // Adjust path if needed
+import VerifyAnimation from '../../Components/Animations/VerifyAnimation'; // Adjust path if needed
 import { Link } from 'react-router-dom';
 
 const VerifyAccount = () => {
@@ -19,7 +19,7 @@ const VerifyAccount = () => {
 
         {/* Action buttons */}
         <div className="space-y-3">
-          <button className="w-[80%] py-2 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-xl transition duration-300">
+          <button className="text-[14px] w-[80%] py-2 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-xl transition duration-300">
             Resend Verification Email
           </button>
           <Link

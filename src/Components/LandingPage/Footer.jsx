@@ -1,9 +1,9 @@
 import React from "react";
-import Logo from '../assets/Images/intervault.jpg';
+import Logo from '../../assets/Images/intervault.jpg';
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-black py-12 px-6">
+    <footer className="bg-white text-black py-12 lg:px-6 md:px-3 px-1">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
         {/* Logo & About */}
@@ -63,9 +63,9 @@ const Footer = () => {
                 <svg
                   width="24"
                   height="24"
-                  fill="currentColor"
+                  fill="rgb(177 29 9)"
                   viewBox="0 0 24 24"
-                  className="fill-current"
+                  className="fill-[rgb(177 29 9)]"
                 >
                   <path d={d} />
                 </svg>
@@ -76,9 +76,9 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Your email"
-              className="w-full px-4 py-2 rounded-lg text-black placeholder-gray-600 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-2 rounded-lg text-black placeholder-gray-600 border-2 border-red-400 focus:outline-none focus:ring-2 focus:ring-red-700"
             />
-            <button className="w-full bg-black text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300">
+            <button className="w-full bg-red-700 text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300">
               Subscribe
             </button>
           </form>

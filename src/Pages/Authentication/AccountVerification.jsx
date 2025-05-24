@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const AccountVerification = () => {
   const { token } = useParams();
@@ -82,7 +82,8 @@ const AccountVerification = () => {
             </p>
             {verification.status === "success" && (
               <p style={{ fontSize: "14px", marginTop: "10px", color: "#555" }}>
-                Redirecting to login page...
+                Redirecting to login page... <Link to="login">Login</Link>
+               
               </p>
             )}
           </>

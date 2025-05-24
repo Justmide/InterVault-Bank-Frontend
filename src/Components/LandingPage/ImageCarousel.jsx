@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import creditcard from "../assets/Images/girl-holding-cards.jpg";
-import debitcards from "../assets/Images/cardimg2.jpg";
-import bitcoin from "../assets/Images/bitcoin.jpg";
+import creditcard from "../../assets/Images/girl-holding-cards.jpg";
+import debitcards from "../../assets/Images/cardimg2.jpg";
+import bitcoin from "../../assets/Images/bitcoin.jpg";
 
 const slides = [
   {
@@ -59,7 +59,7 @@ export default function ImageCarousel() {
         </motion.h2>
         <motion.p
           key={slides[current].text}
-          className="max-w-2xl text-sm md:text-lg italic"
+          className="max-w-2xl  md:text-lg italic"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}

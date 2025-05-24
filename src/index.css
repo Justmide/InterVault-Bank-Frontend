@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+section {
+    scroll-margin-top: 120px; /* Adjust based on the height of your navbar */
+  }
+
+  /* Hide scrollbar */
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+.custom-scroll {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}

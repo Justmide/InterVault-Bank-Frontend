@@ -1,15 +1,14 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
-import PrimaryBtn from "./PrimaryBtn";
-import Logo from '../assets/Images/intervault.jpg';
 import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
-import { div } from "framer-motion/client";
+import PrimaryBtn from "../Button/PrimaryBtn";
+import Logo from "../../assets/Images/intervault.jpg";
 
 export default function Navbar({ sectionRefs }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { label: "Privacy", id: "Privacy" },
@@ -18,22 +17,42 @@ export default function Navbar({ sectionRefs }) {
     { label: "Faq", id: "Faq" },
     { label: "Find a Branch", id: "Find a Branch" },
   ];
-  const navigate = useNavigate()
 
-  const handleClick = () =>{
-    setLoading(true)
+  const handleClick = () => {
+    setLoading(true);
     setTimeout(() => {
-      navigate('/signup'); // Navigate after the loading effect
+      navigate("/signup");
     }, 2000);
-  }
+  };
+
   const handleScroll = (e, sectionId) => {
     e.preventDefault();
     const section = sectionRefs[sectionId]?.current;
+
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
       setMobileMenuOpen(false);
+    } else {
+      console.error(`Section with ID ${sectionId} not found`);
     }
   };
+
+  const renderNavLinks = (isMobile = false) =>
+    navItems.map(({ label, id }) => (
+      <li key={id}>
+        <button
+          onClick={(e) => handleScroll(e, id)}
+          className={`relative px-4 py-2 text-gray-700 font-medium transition-all duration-500 ease-in-out
+            before:absolute before:-bottom-2 before:left-0 before:w-full before:h-1.5
+            before:bg-gradient-to-r before:from-blue-200 before:to-red-500
+            before:transform-gpu before:skew-x-[-20deg] before:scale-x-0 before:origin-left
+            hover:text-red-500 hover:before:scale-x-100 hover:before:shadow-lg hover:before:shadow-blue-500/50
+            ${isMobile ? "w-full text-center" : ""}`}
+        >
+          {label}
+        </button>
+      </li>
+    ));
 
   return (
     <header className="w-full fixed z-50">
@@ -59,50 +78,34 @@ export default function Navbar({ sectionRefs }) {
         </div>
       </nav>
 
-      {/* Main Nav */}
+      {/* Main Navbar */}
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
           {/* Logo */}
-          <a href="#" className="text-2xl font-bold text-purple-700">
+          <a href="/" className="text-2xl font-bold text-purple-700">
             <img
               src={Logo}
-              alt="logo"
+              alt="Intervault Logo"
               loading="lazy"
               className="w-[120px] sm:w-[175px] md:w-[125px] lg:w-[200px]"
             />
           </a>
 
-          {/* Desktop Links */}
-          <ul className="hidden md:flex space-x-1">
-            {navItems.map((item, index) => (
-              <li key={index} className="relative">
-                <a
-                  href={`#${item.id}`}
-                  onClick={(e) => handleScroll(e, item.id)}
-                  className="relative px-[14.5px] py-2 text-gray-700 font-medium transition-all duration-500 ease-in-out
-                    before:absolute before:-bottom-2 before:left-0 before:w-full before:h-1.5
-                    before:bg-gradient-to-r before:from-blue-200 before:to-red-500
-                    before:transform-gpu before:skew-x-[-20deg] before:scale-x-0 before:origin-left
-                    hover:text-red-500 hover:before:scale-x-100 hover:before:shadow-lg hover:before:shadow-blue-500/50"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex space-x-1">{renderNavLinks()}</ul>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex space-x-1" onClick={handleClick}>
+          <div className="hidden md:flex" onClick={handleClick}>
             {loading ? (
-              <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-5000">
+              <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
                 <CircleLoader color="#f40606" size={70} />
               </div>
             ) : (
-              <PrimaryBtn />
+              <PrimaryBtn text="Join Us" />
             )}
           </div>
 
-          {/* Mobile Menu Toggle (Icon Only) */}
+          {/* Mobile Menu Toggle */}
           <button
             className="md:hidden text-gray-700"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -111,33 +114,19 @@ export default function Navbar({ sectionRefs }) {
           </button>
         </div>
 
-        {/* Mobile Links */}
+        {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white shadow-md">
             <ul className="flex flex-col items-center space-y-4 py-4">
-              {navItems.map((item, index) => (
-                <li key={index}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={(e) => handleScroll(e, item.id)}
-                    className="relative px-4 py-2 text-gray-700 font-medium transition-all duration-500 ease-in-out
-                      before:absolute before:-bottom-2 before:left-0 before:w-full before:h-1.5
-                      before:bg-gradient-to-r before:from-blue-100 before:to-red-500
-                      before:transform before:skew-x-[-20deg] before:scale-x-0 before:origin-left
-                      hover:text-white hover:before:scale-x-100 hover:before:shadow-lg hover:before:shadow-blue-500/50"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
+              {renderNavLinks(true)}
               <li>
                 <div onClick={handleClick}>
                   {loading ? (
-                    <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-5000">
+                    <div className="fixed inset-0 flex justify-center items-center bg-gray-900 z-50">
                       <CircleLoader color="#f40606" size={70} />
                     </div>
                   ) : (
-                    <PrimaryBtn />
+                    <PrimaryBtn text="Save with Vault" />
                   )}
                 </div>
               </li>
