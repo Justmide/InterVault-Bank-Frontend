@@ -4,12 +4,15 @@ import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion"; // ✅ import animation
+import user from '../../assets/Images/IMG_4747.jpg'
+import avatar from '../../assets/Images/avatar.png'
+
 
 const testimonialList = [
   {
     author: {
-      fullName: "Oleksander Reynold",
-      picture: "https://cdn.easyfrontend.com/pictures/users/user2.jpg",
+      fullName: "Interface iQ",
+      picture: user,
       designation: "Founder / CEO",
     },
     rating: 3.5,
@@ -18,9 +21,9 @@ const testimonialList = [
   },
   {
     author: {
-      fullName: "Raima Sen",
-      picture: "https://cdn.easyfrontend.com/pictures/users/user3.jpg",
-      designation: "Business Head",
+      fullName: "Xential",
+      picture: avatar,
+      designation: "Senior Dev",
     },
     rating: 3.8,
     description:
@@ -28,9 +31,9 @@ const testimonialList = [
   },
   {
     author: {
-      fullName: "Arjun Kapur",
-      picture: "https://cdn.easyfrontend.com/pictures/users/user27.jpg",
-      designation: "UI Designer",
+      fullName: "YouLov3whizzy",
+      picture: avatar,
+      designation: "Cyber Dev",
     },
     rating: 4.5,
     description:
