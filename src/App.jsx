@@ -16,6 +16,7 @@ import 'primeicons/primeicons.css';
 import ProtectedRoute from './Components/ProtectedRoute';
 import SetupAcc from './Pages/Protected/SetupAcc';
 import ProgressBar from './Components/SweetAlert/ProgressBar';
+import Transfer from './Components/UserDashboard/Transfer';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -50,6 +51,7 @@ const App = () => {
               <Route path="/VerifyAccount" element={<VerifyAccount />} />
               <Route path='verify/:token' element={<AccountVerification />} />
               <Route path='verify2facode' element={<Verify2faCode />} /> 
+              <Route path="/transfer" element={<Transfer/>} />
               {/* PROTECTED ROUTE  */}
               <Route element={<ProtectedRoute />}>
               <Route path='/dashboard' element={<Dashboard/>} />

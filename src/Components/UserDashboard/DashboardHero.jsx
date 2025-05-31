@@ -72,24 +72,12 @@ export default function DashboardHero() {
               </div>
             </TabPanel>
             <TabPanel
-              header="Transactions"
+              header="Transfer"
               className="italic focus-within:not-italic"
               disabled
             >
-              <div className="">
-                {/* Cards or Account Creation  */}
-                <div className="p-6 border-b-[1.6px] border-gray-400">
-                  <CreditCardDisplay />
-                </div>
-
-                {/* Monthly Flow */}
-                <div className="flex mt-3 w-full h-[400px] border-2 border-red-800">
-                  <div className="w-[70%] border-r-[1.8px] border-gray-400 border-2">
-                    <div>
-                      <MoneyFlowChart />
-                    </div>
-                  </div>
-                </div>
+              <div>
+             <transfer />
               </div>
             </TabPanel>
             <TabPanel
